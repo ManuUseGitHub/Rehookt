@@ -11,6 +11,10 @@
 # production
 /build
 
+/rehookt/LICENSE
+/rehookt/rehookt_logo.png
+/rehookt/rehookt_logo.svg
+
 # misc
 .DS_Store
 .env.local

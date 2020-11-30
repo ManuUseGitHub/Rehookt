@@ -1,4 +1,4 @@
-const rehookt = require("rehookt");
+const rehookt = require("../rehookt");
 
 function App(data) {
 

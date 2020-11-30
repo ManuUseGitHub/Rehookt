@@ -1,0 +1,48 @@
+{
+  "_from": "rehookt",
+  "_id": "rehookt@1.1.1",
+  "_inBundle": false,
+  "_integrity": "sha512-UTB0Z4Ch9E8wwWicSj9VlP4YcdkrrrsV2EOeR6BGUX/WPvX0Eq0Dj0M+ZP68gRBh5de6+TfmYk1nGcWWb7I4OQ==",
+  "_location": "/rehookt",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "rehookt",
+    "name": "rehookt",
+    "escapedName": "rehookt",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/rehookt/-/rehookt-1.1.1.tgz",
+  "_shasum": "551c34bc28b821af7aec799b9c5118e25fa6bea8",
+  "_spec": "rehookt",
+  "_where": "C:\\Users\\max09\\Documents\\myModules\\tests\\Rehookt",
+  "author": {
+    "name": "Jean Luc Emmanuel VERHANNEMAN"
+  },
+  "bundleDependencies": false,
+  "dependencies": {},
+  "deprecated": false,
+  "description": "Helps to create hooks (value+set)  in an object to pass through components nodes in one go.",
+  "git repository": "https://github.com/ManuUseGitHub/Rehookt",
+  "keywords": [
+    "workflow",
+    "react",
+    "hooks",
+    "hook",
+    "on the fly"
+  ],
+  "license": "MIT",
+  "main": "index.min.js",
+  "name": "rehookt",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.1.1"
+}
