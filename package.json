@@ -20,7 +20,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "watch-test": "react-scripts test --watchAll",
+    "watchTest": "react-scripts test --watchAll",
     "test:coverage" : "react-scripts test --coverage",
     "eject": "react-scripts eject"
   },
