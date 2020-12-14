@@ -53,6 +53,7 @@ describe('hooks', () => {
       }
     ); 
   });
+  
   describe('exception cases', () => {
     it('repeating hook throw', () => {
       const t = () => {
@@ -106,8 +107,6 @@ describe('hooks', () => {
         shallow( < App hooks = { hooks } definitions = { definitions } />)
       };
       expect(t).toThrow("Rehookts have to have a non null name");
-    });
-
-    
+    });    
   });
 });

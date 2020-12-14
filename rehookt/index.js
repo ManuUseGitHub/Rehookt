@@ -38,12 +38,13 @@ module.exports = ( _ => {
      */
     const generate = ( ...definitions ) => {
         console.warn("Calling deprecated function!"); // TODO: make this cross-browser
-        useStates( ...definitions );
+        
+        return useStates( ...definitions );
     }
 
     const useStates = ( ...definitions ) => {
 
-        const state = {};
+        const state = { };
 
         checkAbuses( ...definitions );
         

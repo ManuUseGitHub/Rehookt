@@ -4,8 +4,7 @@ function App(data) {
 
   const {hooks = {generated : {}}, definitions = []} = data;
 
-  hooks.generated = generate(...definitions);
-  console.log(hooks)
+  hooks.generated = useStates(...definitions);
 
   return ( <div className="App" /> );
 }

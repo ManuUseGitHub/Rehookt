@@ -10,29 +10,29 @@
     ```jsx
     // Import the package.
 
-    const rehookt = require( 'rehookt' );
+    const { useStates, generate } = require("rehookt");
 
     // ...
 
 
     // Generate hooks in one object.
 
-    const hooks = rehookt.generate( "first", "second", "third", "fourth", /*...*/ );
+    const hooks = useStates( "first", "second", "third", "fourth", /*...*/ );
     ```
 
 ## Define with a value
 You can associate a value to the hook by three ways.
-1. Dont provide any value, but just the name of the hook. It will set the value to `null` by default.
+1. Dont provide any value, but just the name of the hook. It will set the value to `undefined` by default.
     ```jsx
-    rehookt.generate( "first", /*...*/ );
+    useStates( "first", /*...*/ );
     ```
 1. Provide a 2-cells-array with the name, then the value.
     ```jsx
-    rehookt.generate( ["first",1], /*...*/ );
+    useStates( ["first",1], /*...*/ );
     ```
 1. Provide an object.
     ```jsx
-    rehookt.generate( {name:"first", value:1}, /*...*/ );
+    useStates( {name:"first", value:1}, /*...*/ );
     ```
 
 ## Usage
@@ -106,12 +106,15 @@ return ( <ChildComponent hooks={hooks}/> );
 // Creating hooks one by one in one go.
 // rehookt is using React.useState under the hood.
 
-const hooks = rehookt.generate(
+const hooks = useStates(
     ["person",  { name : "John doe", height : 1.80 }],
     ["address", { city : "NewYork", zip : 10111, /*...*/ }],
     ["job",     { name : "Fullstack dev" }],
-    "comment"   //default value : null
+    "comment"   //default value : undefined
 );
 
 return ( <ChildComponent hooks={hooks}/> );
 ```
+
+### code 
+Visit the github test repository page to [Here](https://github.com/ManuUseGitHub/Rehookt/tree/master/rehookt).
