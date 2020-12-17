@@ -49,4 +49,4 @@ console.log( `${JohnDoe.name} is ${JohnDoe.height} tall.` );
 ```
 
 ## Code 
-Visit the github test repository page [Here](https://github.com/ManuUseGitHub/Rehookt/tree/master/rehookthttps://github.com/ManuUseGitHub/Rehookt/blob/master/rehookt/index.js).
+Visit the github test repository page [Here](https://github.com/ManuUseGitHub/Rehookt/blob/master/rehookt/index.js).
