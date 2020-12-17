@@ -17,8 +17,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test" : "echo 'Use rehookt:test command', test command removed to avoid CI redundency on running test thus providen by the coverage, see 'coveralls' command",
-    "rehookt:test": "react-scripts test --watchAll=false",
+    "test": "react-scripts test --watchAll=false --coverage",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | coveralls",
     "watchTest": "react-scripts test --watchAll",
     "eject": "react-scripts eject"
