@@ -17,6 +17,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --watchAll=false --coverage",
+    "coveralls": "jest --coverage && cat ./tests/coverage/lcov.info | coveralls",
     "watchTest": "react-scripts test --watchAll",
     "eject": "react-scripts eject"
   },
@@ -27,8 +28,15 @@
     ]
   },
   "jest": {
-    "coverageReporters": ["json", "lcov", "text", "clover"],
-    "collectCoverageFrom": ["rehookt/**/*.{js,ts,tsx}"]
+    "coverageReporters": [
+      "json",
+      "lcov",
+      "text",
+      "clover"
+    ],
+    "collectCoverageFrom": [
+      "rehookt/**/*.{js,ts,tsx}"
+    ]
   },
   "browserslist": {
     "production": [
@@ -43,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "coveralls": "^3.1.0",
     "del": "^6.0.0",
     "gulp": "^4.0.2"
   }
