@@ -4,9 +4,7 @@ const fs   = require( "fs" );
 
 const { watch } = gulp;
 
-
 function copyFolder( cb ) {
-
     try{
         if( fs.existsSync( 'rehookt' ) ){
 
@@ -18,10 +16,7 @@ function copyFolder( cb ) {
             .pipe( gulp.dest( 'rehookt' ) );
             
     }
-    catch( err ){
-
-    }
-
+    catch( err ){ }
     cb();
 }
 

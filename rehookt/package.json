@@ -1,28 +1,27 @@
 {
-  "_from": "rehookt",
-  "_id": "rehookt@1.1.1",
+  "_from": "rehookt@^1.1.1",
+  "_id": "rehookt@1.2.0",
   "_inBundle": false,
-  "_integrity": "sha512-UTB0Z4Ch9E8wwWicSj9VlP4YcdkrrrsV2EOeR6BGUX/WPvX0Eq0Dj0M+ZP68gRBh5de6+TfmYk1nGcWWb7I4OQ==",
+  "_integrity": "sha512-BhSyqtVoJowbEI5MuZULqeT1J3XffXgNgATlalQ6cxpyS1kTLsZ1VTBamYi1a63rydgQxkEFviqt46pvYxC5yw==",
   "_location": "/rehookt",
   "_phantomChildren": {},
   "_requested": {
-    "type": "tag",
+    "type": "range",
     "registry": true,
-    "raw": "rehookt",
+    "raw": "rehookt@^1.1.1",
     "name": "rehookt",
     "escapedName": "rehookt",
-    "rawSpec": "",
+    "rawSpec": "^1.1.1",
     "saveSpec": null,
-    "fetchSpec": "latest"
+    "fetchSpec": "^1.1.1"
   },
   "_requiredBy": [
-    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/rehookt/-/rehookt-1.1.1.tgz",
-  "_shasum": "551c34bc28b821af7aec799b9c5118e25fa6bea8",
-  "_spec": "rehookt",
-  "_where": "C:\\Users\\max09\\Documents\\myModules\\tests\\Rehookt",
+  "_resolved": "https://registry.npmjs.org/rehookt/-/rehookt-1.2.0.tgz",
+  "_shasum": "a2b8640157ff164c121f15bfab1843a800bd5e2b",
+  "_spec": "rehookt@^1.1.1",
+  "_where": "C:\\Users\\max09\\Documents\\myModules\\Rehookt",
   "author": {
     "name": "Jean Luc Emmanuel VERHANNEMAN"
   },
@@ -31,6 +30,7 @@
   "deprecated": false,
   "description": "Helps to create hooks (value+set)  in an object to pass through components nodes in one go.",
   "git repository": "https://github.com/ManuUseGitHub/Rehookt",
+  "homepage": "https://github.com/ManuUseGitHub/Rehookt#readme",
   "keywords": [
     "workflow",
     "react",
@@ -38,7 +38,6 @@
     "hook",
     "on the fly"
   ],
-  "homepage": "https://github.com/ManuUseGitHub/Rehookt#readme",
   "license": "MIT",
   "main": "index.min.js",
   "name": "rehookt",
