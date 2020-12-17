@@ -1,6 +1,10 @@
+
+const React = require('react');
 const { useStates, generate } = require("../rehookt");
 
-function App(data) {
+module.exports = function App(data) {
+
+  
 
   const {hooks = {generated : {}}, definitions = []} = data;
 
@@ -8,5 +12,3 @@ function App(data) {
 
   return ( <div className="App" /> );
 }
-
-export default App;

@@ -1,6 +1,8 @@
-import App from '../App';
-import Enzyme, { shallow } from 'enzyme';
-import Adapter from 'enzyme-adapter-react-16';
+const React = require( 'react' );
+const App = require( '../App' );
+const Enzyme =require( 'enzyme' );
+const { shallow } = Enzyme;
+const Adapter = require( 'enzyme-adapter-react-16' );
 
 Enzyme.configure({
 
