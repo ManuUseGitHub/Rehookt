@@ -12,7 +12,7 @@ See the [NPM page](https://www.npmjs.com/package/rehookt) for details.
 Get it [Here](https://github.com/ManuUseGitHub/Rehookt/blob/master/rehookt/index.js).
 
 ## Demo
-Here is a [demo](https://github.com/ManuUseGitHub/Rehookt/blob/master/rehookt/demo) project to see how can Rehookt be used and how it can perform with **auto generated** hooks.
+Here is a [demo](https://github.com/ManuUseGitHub/Rehookt/tree/master/demo) project to see how can Rehookt be used and how it can perform with **auto generated** hooks.
 
 ## With Rehookt
 ```jsx
