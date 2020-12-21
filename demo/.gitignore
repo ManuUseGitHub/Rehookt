@@ -11,10 +11,6 @@
 # production
 /build
 
-/rehookt/LICENSE
-/rehookt/rehookt_logo.png
-/rehookt/rehookt_logo.svg
-
 # misc
 .DS_Store
 .env.local
@@ -25,7 +21,3 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-.nyc_output/
-
-*.~lock*

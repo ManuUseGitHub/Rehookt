@@ -43,6 +43,60 @@ describe('hooks', () => {
   
         expect(person.val.name).toBe("John Doe");
       }
+
+      
+    ); 
+
+    it('creates no hook', () => {
+      const definitions = [ "REHOOKT_NONE" ];
+      
+      const hooks = {};
+  
+      shallow( <App hooks = { hooks } definitions = { definitions } />)
+  
+      const keys = Object.keys(hooks.generated);
+  
+        expect(keys.length).toBe( 0 );
+      }
+    ); 
+
+    it('creates no hook lowercase', () => {
+      const definitions = [ "rehookt_none" ];
+      
+      const hooks = {};
+  
+      shallow( <App hooks = { hooks } definitions = { definitions } />)
+  
+      const keys = Object.keys(hooks.generated);
+  
+        expect(keys.length).toBe( 0 );
+      }
+    ); 
+
+    it('creates no hook with object', () => {
+      const definitions = [ { name : "rehookt_none", value : "data" } ];
+      
+      const hooks = {};
+  
+      shallow( <App hooks = { hooks } definitions = { definitions } />)
+  
+      const keys = Object.keys(hooks.generated);
+  
+        expect(keys.length).toBe( 0 );
+      }
+    );    
+
+    it('creates no hook with array', () => {
+      const definitions = [ [ "rehookt_none", "data" ] ];
+      
+      const hooks = {};
+  
+      shallow( <App hooks = { hooks } definitions = { definitions } />)
+  
+      const keys = Object.keys(hooks.generated);
+  
+        expect(keys.length).toBe( 0 );
+      }
     ); 
   });
   
@@ -67,7 +121,73 @@ describe('hooks', () => {
       };
       expect(t).toThrow("Rehookts have to have a name defined");
     }); 
+
+    it('throws on starting by a special char named hook ', () => {
+      const t = () => {
+        
+        const definitions = [ "%False_name" ] 
+        const hooks = {};
+    
+        shallow( < App hooks = { hooks } definitions = { definitions } />);
+      };
+      expect(t).toThrow("A rehookt hook name should be valid");
+    }); 
+    
+    it('throws on having a space char named hook ', () => {
+      const t = () => {
+        
+        const definitions = [ " False_name" ] 
+        const hooks = {};
+    
+        shallow( < App hooks = { hooks } definitions = { definitions } />);
+      };
+      expect(t).toThrow("A rehookt hook name should be valid");
+    });
+
+    it('throws on having a linebreak char named hook ', () => {
+      const t = () => {
+        
+        const definitions = [ "False\nname" ] 
+        const hooks = {};
+    
+        shallow( < App hooks = { hooks } definitions = { definitions } />);
+      };
+      expect(t).toThrow("A rehookt hook name should be valid");
+    });
+
+    it('throws on having a linebreak char named hook ', () => {
+      const t = () => {
+        
+        const definitions = [ "False\rname" ] 
+        const hooks = {};
+    
+        shallow( < App hooks = { hooks } definitions = { definitions } />);
+      };
+      expect(t).toThrow("A rehookt hook name should be valid");
+    });
+
+      it('throws on having a first numeric char', () => {
+        const t = () => {
+          
+          const definitions = [ "0False_name" ] 
+          const hooks = {};
+      
+          shallow( < App hooks = { hooks } definitions = { definitions } />);
+        };
+        expect(t).toThrow("A rehookt hook name should be valid");
+    }); 
   
+    it('throws on having a special char', () => {
+      const t = () => {
+        
+        const definitions = [ "False+-*/name" ] 
+        const hooks = {};
+    
+        shallow( < App hooks = { hooks } definitions = { definitions } />);
+      };
+      expect(t).toThrow("A rehookt hook name should be valid");
+  }); 
+
     it('throws on hook name is an object ', () => {
       const t = () => {
         

@@ -42,6 +42,35 @@ module.exports = ( _ => {
         return useStates( ...definitions );
     }
 
+    const doesRejectHooks = ( definitions ) => {
+        
+        // when REHOOKT_NONE is encountered, return a no hook object
+        if( definitions.length === 1){
+            
+            const keys = definitions.map( e => {
+                const type = typeof(e);
+                const { name } = e;
+
+                if(type === "string"){
+                    return e.toUpperCase();
+                }
+
+                if(Array.isArray(e)){
+                    return e[ 0 ].toUpperCase();
+
+                } else if(type === "object" && name){
+                    return name.toUpperCase();
+                }
+            })
+
+            if(keys.includes("REHOOKT_NONE")){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     const useStates = ( ...definitions ) => {
 
         const state = { };
@@ -55,6 +84,10 @@ module.exports = ( _ => {
 
             // check the stateName integrity and state consistency
             checkValidity ( state, stateName );
+
+            if( doesRejectHooks( definitions ) ){
+                return;
+            }
 
             // Storing the hook into the variable as an array.
             const hook = useState( use );
@@ -109,6 +142,27 @@ module.exports = ( _ => {
         if( /^[\[{].*[\]}]$/.test( stateName ) ){
 
             throw RehooktException( REHOOKT_UNCONCISTENCY_EXP, 2, `Nothing than a string can be accepted as hook name given ${JSON.stringify( stateName )}` );
+        }
+
+        // A hook should not start by a numeric ...
+        if( /^[0-9].*$/.test( stateName ) ){
+            
+            throw RehooktException( REHOOKT_REFERER_EXP, 3, "A rehookt hook name should be valid." +
+            " You should avoid making your hooks start by a number" );
+        }
+
+        // A hook should not have a forbiden special char ...
+        if( /^.*[!@#%^&*()+\=\[\]{};':"\\|,.<>\/?~\]].*$/.test( stateName ) ){
+
+            throw RehooktException( REHOOKT_REFERER_EXP, 4, "A rehookt hook name should be valid." +
+            " You must avoid forbiden special chars in your hook name" );
+        }
+
+        // A hook should not have a space or linebreak in the name ...
+        if( /^.*[\r\n\s].*$/.test( stateName ) ){
+
+            throw RehooktException( REHOOKT_REFERER_EXP, 5, "A rehookt hook name should be valid." +
+            " You must avoid space chars or linebreak in your hook name" );
         }
     }
 
