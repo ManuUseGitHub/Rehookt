@@ -8,6 +8,11 @@ Enzyme.configure({
   adapter: new Adapter()
 });
 
+const shallowAppWithHooks = (hooks,definitions) => {
+  shallow( <App hooks = { hooks }
+    definitions = { definitions } />)
+}
+
 // see : https://www.freecodecamp.org/news/testing-react-hooks/
 
 describe('hooks', () => {
@@ -29,6 +34,31 @@ describe('hooks', () => {
         expect(keys.length).toBe(3);
       }
     ); 
+    it('creates a b c hook', () => {
+      const definitions = ["a","b","c"];
+      const hooks = {};
+
+      shallowAppWithHooks(hooks,definitions);
+  
+      const keys = Object.keys(hooks.generated);
+
+      expect(keys.length).toBe(3);
+      }
+    ); 
+
+    it('creates a b c hook', () => {
+      const definitions = [[ "rehookt_x",{x : 10, n : 10 , f: (x) =>{
+        return x ;
+      }}]];
+      const hooks = {};
+  
+      shallowAppWithHooks(hooks,definitions);
+  
+        const keys = Object.keys(hooks.generated);
+  
+        expect(keys.length).toBe(10);
+      }
+    ); 
   
     it('creates person hook with value', () => {
       const definitions = [ 
@@ -37,7 +67,7 @@ describe('hooks', () => {
       
       const hooks = {};
   
-      shallow( <App hooks = { hooks } definitions = { definitions } />)
+      shallowAppWithHooks(hooks,definitions);
   
       const person = hooks.generated.person;
   
@@ -52,7 +82,7 @@ describe('hooks', () => {
       
       const hooks = {};
   
-      shallow( <App hooks = { hooks } definitions = { definitions } />)
+      shallowAppWithHooks(hooks,definitions);
   
       const keys = Object.keys(hooks.generated);
   
@@ -65,7 +95,7 @@ describe('hooks', () => {
       
       const hooks = {};
   
-      shallow( <App hooks = { hooks } definitions = { definitions } />)
+      shallowAppWithHooks(hooks,definitions);
   
       const keys = Object.keys(hooks.generated);
   
@@ -78,7 +108,7 @@ describe('hooks', () => {
       
       const hooks = {};
   
-      shallow( <App hooks = { hooks } definitions = { definitions } />)
+      shallowAppWithHooks(hooks,definitions);
   
       const keys = Object.keys(hooks.generated);
   
@@ -91,7 +121,7 @@ describe('hooks', () => {
       
       const hooks = {};
   
-      shallow( <App hooks = { hooks } definitions = { definitions } />)
+      shallowAppWithHooks(hooks,definitions);
   
       const keys = Object.keys(hooks.generated);
   
@@ -105,10 +135,33 @@ describe('hooks', () => {
       const t = () => {
         
         const definitions = [ "a", "b", "c", "a" ];
-        
-        shallow( < App definitions = { definitions } />);
+        const hooks = {};
+
+        shallowAppWithHooks(hooks,definitions);
       };
       expect(t).toThrow();
+    }); 
+
+    it('undefined hook arg', () => {
+      const t = () => {
+        
+        const definitions = [ 1.2 ];
+        const hooks = {};
+
+        shallowAppWithHooks(hooks,definitions);
+      };
+      expect(t).toThrow("abcd");
+    }); 
+
+    it('null hook arg', () => {
+      const t = () => {
+        
+        const definitions = [ null ];
+        const hooks = {};
+        
+        shallowAppWithHooks(hooks,definitions);
+      };
+      expect(t).toThrow("abcd");
     }); 
   
     it('throws on unamed hook ', () => {
@@ -117,7 +170,7 @@ describe('hooks', () => {
         const definitions = [ { value : "John Doe" } ] 
         const hooks = {};
     
-        shallow( < App hooks = { hooks } definitions = { definitions } />);
+        shallowAppWithHooks(hooks,definitions);
       };
       expect(t).toThrow("Rehookts have to have a name defined");
     }); 
@@ -128,7 +181,7 @@ describe('hooks', () => {
         const definitions = [ "%False_name" ] 
         const hooks = {};
     
-        shallow( < App hooks = { hooks } definitions = { definitions } />);
+        shallowAppWithHooks(hooks,definitions);
       };
       expect(t).toThrow("A rehookt hook name should be valid");
     }); 
@@ -139,7 +192,7 @@ describe('hooks', () => {
         const definitions = [ " False_name" ] 
         const hooks = {};
     
-        shallow( < App hooks = { hooks } definitions = { definitions } />);
+        shallowAppWithHooks(hooks,definitions);
       };
       expect(t).toThrow("A rehookt hook name should be valid");
     });
@@ -150,7 +203,7 @@ describe('hooks', () => {
         const definitions = [ "False\nname" ] 
         const hooks = {};
     
-        shallow( < App hooks = { hooks } definitions = { definitions } />);
+        shallowAppWithHooks(hooks,definitions);
       };
       expect(t).toThrow("A rehookt hook name should be valid");
     });
@@ -161,7 +214,7 @@ describe('hooks', () => {
         const definitions = [ "False\rname" ] 
         const hooks = {};
     
-        shallow( < App hooks = { hooks } definitions = { definitions } />);
+        shallowAppWithHooks(hooks,definitions);
       };
       expect(t).toThrow("A rehookt hook name should be valid");
     });
@@ -172,7 +225,7 @@ describe('hooks', () => {
           const definitions = [ "0False_name" ] 
           const hooks = {};
       
-          shallow( < App hooks = { hooks } definitions = { definitions } />);
+          shallowAppWithHooks(hooks,definitions);
         };
         expect(t).toThrow("A rehookt hook name should be valid");
     }); 
@@ -183,7 +236,7 @@ describe('hooks', () => {
         const definitions = [ "False+-*/name" ] 
         const hooks = {};
     
-        shallow( < App hooks = { hooks } definitions = { definitions } />);
+        shallowAppWithHooks(hooks,definitions);
       };
       expect(t).toThrow("A rehookt hook name should be valid");
   }); 
@@ -194,7 +247,7 @@ describe('hooks', () => {
         const definitions = [ { name : { name : "hook" }, value : "John Doe" } ] 
         const hooks = {};
     
-        shallow( < App hooks = { hooks } definitions = { definitions } />);
+        shallowAppWithHooks(hooks,definitions);
       };
       expect(t).toThrow("Nothing than a string can be accepted as hook name given");
     });
@@ -205,7 +258,7 @@ describe('hooks', () => {
         const definitions = [ { name : [], value : "John Doe" } ] 
         const hooks = {};
     
-        shallow( < App hooks = { hooks } definitions = { definitions } />);
+        shallowAppWithHooks(hooks,definitions);
       };
       expect(t).toThrow("Nothing than a string can be accepted as hook name given");
     });
@@ -216,7 +269,7 @@ describe('hooks', () => {
         const definitions = [ { name : null, value : "John Doe" } ] 
         const hooks = {};
     
-        shallow( < App hooks = { hooks } definitions = { definitions } />)
+        shallowAppWithHooks(hooks,definitions);
       };
       expect(t).toThrow("Rehookts have to have a non null name");
     });    

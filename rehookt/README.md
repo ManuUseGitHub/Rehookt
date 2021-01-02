@@ -10,9 +10,9 @@
     ```jsx
     // --- Parent component ---
 
-    const ChildComponent = require( "../bar/foo/ChildComponentFolder1" );
-    const ChildComponent = require( "../bar/foo/ChildComponentFolder2" );
-    const ChildComponent = require( "../bar/foo/ChildComponentFolderN" );
+    import ChildComponent1 from "../bar/foo/ChildComponentFolder1";
+    import ChildComponent2 = from "../bar/foo/ChildComponentFolder2";
+    import ChildComponentN = from "../bar/foo/ChildComponentFolderN";
 
     const { useStates, generate } = require( "rehookt" );
 
@@ -37,9 +37,9 @@
     ```jsx
     // --- Any child component ---
 
-    const GrandChildComponent = require( "../bar/baz/GrandChildComponentFolder" );
+    import GrandChildComponent from "../bar/baz/GrandChildComponentFolder";
     
-    module.exports = ( hooks ) {
+    module.exports = ( hooks ) => {
 
         const { first, second, third, fourth, /*...*/ } = hooks;
 
@@ -60,16 +60,38 @@
 You can associate a value to the hook by three ways.
 1. Dont provide any value, but just the name of the hook. It will set the value to `undefined` by default.
     ```jsx
-    useStates( "first", /*...*/ );
+    const hooks = useStates( "first", /*...*/ );
     ```
 1. Provide a 2-cells-array with the name, then the value.
     ```jsx
-    useStates( ["first",1], /*...*/ );
+    const hooks = useStates( ["first",1], /*...*/ );
     ```
 1. Provide an object.
     ```jsx
-    useStates( {name:"first", value:1}, /*...*/ );
+    const hooks = useStates( {name:"first", value:1}, /*...*/ );
+    ```
+    
+## Special hooks
+1. **rehookt_none**
+    If you wish to return an empty set of hooks, create the single Special hook identified by, `REHOOKT_NONE` or `rehookt_none`. The case is not sensitive. and the value is ignored.
+
+    This is the only way to get an empty set... nothing given to useStates throws an exception
+    ```jsx
+    const hooks1 = useStates( "rehookt_none" );
+    
+    // OR an object with or without a value
+    const hooks2 = useStates( { name : "rehookt_none", value : "data" }, );
+    
+    // OR an array with or without a value
+    const hooks3 = useStates( ["rehookt_none", 'none'], );
+
+    console.log( hooks1, hooks2, hooks3 )
+    // Will output { } { } { }
     ```
 
-## Code 
+## Github
+1. **Code**
 Visit the github test repository page [Here](https://github.com/ManuUseGitHub/Rehookt/blob/master/rehookt/index.js).
+
+1. **Demo**
+Here is an interactive [demo](https://github.com/ManuUseGitHub/Rehookt/tree/master/demo) to show you how Rehookt can be used to generate hooks **on the fly**.

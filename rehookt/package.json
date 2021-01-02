@@ -1,26 +1,27 @@
 {
-  "_from": "rehookt@^1.1.1",
-  "_id": "rehookt@1.2.0",
+  "_from": "rehookt",
+  "_id": "rehookt@1.3.0",
   "_inBundle": false,
-  "_integrity": "sha512-BhSyqtVoJowbEI5MuZULqeT1J3XffXgNgATlalQ6cxpyS1kTLsZ1VTBamYi1a63rydgQxkEFviqt46pvYxC5yw==",
+  "_integrity": "sha512-kmw65pqkpI9k4gdXiAU0tT5hUp6v5wAYHl93lkM+cX3QrVNEOPVTbKpjGqXqHurxJElULk79ZCh2G5Po/gYNsQ==",
   "_location": "/rehookt",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "tag",
     "registry": true,
-    "raw": "rehookt@^1.1.1",
+    "raw": "rehookt",
     "name": "rehookt",
     "escapedName": "rehookt",
-    "rawSpec": "^1.1.1",
+    "rawSpec": "",
     "saveSpec": null,
-    "fetchSpec": "^1.1.1"
+    "fetchSpec": "latest"
   },
   "_requiredBy": [
+    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/rehookt/-/rehookt-1.2.0.tgz",
-  "_shasum": "a2b8640157ff164c121f15bfab1843a800bd5e2b",
-  "_spec": "rehookt@^1.1.1",
+  "_resolved": "https://registry.npmjs.org/rehookt/-/rehookt-1.3.0.tgz",
+  "_shasum": "e4fa66b6941db5fd75e7881d8b6ea08f5dd0d16c",
+  "_spec": "rehookt",
   "_where": "C:\\Users\\max09\\Documents\\myModules\\Rehookt",
   "author": {
     "name": "Jean Luc Emmanuel VERHANNEMAN"

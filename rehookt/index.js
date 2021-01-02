@@ -1,213 +1,165 @@
-const { useState } = require( "react" );
+import { useState } from 'react';
+const { checkAbuses, checkValidity } = require('./validity.ts');
 
-module.exports = ( _ => {
+console.log(checkAbuses);
 
-    const REHOOKT_ABUSE_EXP = {
-        intro : "Hook integrity",
-        code  : 0
+const rehookt = _ => {
+  // PUBLIC -------------------------------------------------------------------
+
+  /**
+   * @deprecated Since version 1.2. provide the prefered useStates method.
+   * The generate Will be deleted in version 2.0. Use "useStates" instead.
+   */
+  const generate = (...definitions) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    return useStates(...definitions);
+  };
+
+  const useStates = function (...definitions) {
+    const state = { };
+
+    const redefinitions = computeSpecialHooks(...definitions);
+
+    checkAbuses(...redefinitions);
+
+    // Looping on all arguments.
+    redefinitions.forEach(function (item) {
+      const { stateName, use } = computeStatenameAndUse(item);
+
+      // check the stateName integrity and state consistency
+      checkValidity(state, stateName);
+
+      if (doesRejectHooks(redefinitions)) {
+        return;
+      }
+
+      // Storing the hook into the variable as an array.
+      // eslint-disable-next-line react-hooks/rules-of-hooks
+      const hook = useState(use);
+
+      const val = hook[0];
+      const set = hook[1];
+
+      // Adding the rehookt hook into the state object under the stateName.
+      state[stateName] = { val, set };
+    });
+
+    return state;
+  };
+
+  // PRIVATE ------------------------------------------------------------------
+  const keysMapping = (entry) => {
+    const type = typeof (entry);
+
+    if (type === 'string') {
+      return entry.toUpperCase();
     }
 
-    const REHOOKT_UNCONCISTENCY_EXP = {
-        intro : "Hook unconsitency",
-        code  : 1000
+    if (Array.isArray(entry)) {
+      return entry[0].toUpperCase();
+    } else if (type === 'object') {
+      const { name } = entry;
+      if (name) {
+        return name.toUpperCase();
+      }
     }
 
-    const REHOOKT_REFERER_EXP = {
-        intro : "Wrong hook referer",
-        code  : 2000
+    return entry;
+  };
+
+  const doesRejectHooks = (definitions) => {
+    // when REHOOKT_NONE is encountered, return a no hook object
+    if (definitions.length === 1) {
+      const keys = definitions.map(e => keysMapping(e));
+
+      if (keys.includes('REHOOKT_NONE')) {
+        return true;
+      }
     }
 
-    const RehooktException = ( exclass, number, submessage ) => {
+    return false;
+  };
 
-        const message = `${exclass.intro} exception\n${submessage}`;
-        
-        const error = new Error( message );
-        
-        error.code = exclass.code + number;
+  const redefineByXFunct = function (definitions, stateName, use) {
+    if (/REHOOKT_X/i.test(stateName)) {
+      const redefinitions = [];
 
-        return error;
-    }
-    
-    RehooktException.prototype = Object.create(Error.prototype);
-
-    
-    // PUBLIC -----------------------------------------------------------------------
-    
-    /**
-     * @deprecated Since version 1.2. provide the prefered useStates method, generate Will be deleted in version 2.0. Use "useStates" instead.
-     */
-    const generate = ( ...definitions ) => {
-        console.warn("Calling deprecated function!"); // TODO: make this cross-browser
-        
-        return useStates( ...definitions );
-    }
-
-    const doesRejectHooks = ( definitions ) => {
-        
-        // when REHOOKT_NONE is encountered, return a no hook object
-        if( definitions.length === 1){
-            
-            const keys = definitions.map( e => {
-                const type = typeof(e);
-                const { name } = e;
-
-                if(type === "string"){
-                    return e.toUpperCase();
-                }
-
-                if(Array.isArray(e)){
-                    return e[ 0 ].toUpperCase();
-
-                } else if(type === "object" && name){
-                    return name.toUpperCase();
-                }
-            })
-
-            if(keys.includes("REHOOKT_NONE")){
-                return true;
-            }
+      try {
+        const { n, f, x, value } = use;
+        let i = 0;
+        for (;i < n; ++i) {
+          redefinitions.push({ name: `rh_${f(x + i)}`, value });
         }
+      } catch (err) {
+      // eslint-disable-next-line no-console
+        console.error(err);
+      }
 
-        return false;
+      return redefinitions;
+    }
+    return definitions;
+  };
+
+  const computeSpecialHooks = function (...definitions) {
+    if (definitions.length === 1) {
+      const { stateName, use } = computeStatenameAndUse(definitions[0]);
+
+      const redefinitions = redefineByXFunct(definitions, stateName, use);
+
+      return redefinitions;
     }
 
-    const useStates = ( ...definitions ) => {
+    return definitions;
+  };
 
-        const state = { };
-
-        checkAbuses( ...definitions );
-        
-        // Looping on all arguments.
-        definitions.forEach( item => {
-
-            const { stateName , use } = computeStatenameAndUse( item );
-
-            // check the stateName integrity and state consistency
-            checkValidity ( state, stateName );
-
-            if( doesRejectHooks( definitions ) ){
-                return;
-            }
-
-            // Storing the hook into the variable as an array.
-            const hook = useState( use );
-
-            const val = hook[ 0 ];
-            const set = hook[ 1 ];
-
-            // Adding the rehookt hook into the state object under the stateName.
-            state[ stateName ] = { val, set };
-        })
-
-        return state;
-    }
-    
-    // PRIVATE ----------------------------------------------------------------------
-    const checkAbuses = ( ...definitions ) => {
-        
-        // At least one hook should be supplied for creation ...
-        if( definitions.length === 0 ){
-
-            throw RehooktException( REHOOKT_ABUSE_EXP, 1, `Rehookt need definitions to work on. Nothing provided.` );
-        }
-
-        // A hook should not be registered ...
-        if( definitions.length > 99 ){
-
-            throw RehooktException( REHOOKT_ABUSE_EXP, 2, `Rehookt prefers not to create an abusive number of rehookts.` );
-        }
-    }
-    
-    const checkValidity = ( state, stateName ) => {
-        
-        // A hook should have a name that is defined ...
-        if( stateName === undefined ){
-
-            throw RehooktException( REHOOKT_REFERER_EXP, 1, "Rehookts have to have a name defined" );
-        }
-
-        // A hook should have a name that is defined ...
-        if( stateName === null ){
-
-            throw RehooktException( REHOOKT_REFERER_EXP, 2, "Rehookts have to have a non null name" );
-        }
-
-        // A hook should not be registered ...
-        if( state[ stateName ] !== undefined ){
-
-            throw RehooktException( REHOOKT_UNCONCISTENCY_EXP, 1, `One hook already exists under the name ${stateName}` );
-        }
-
-        // A hook should have a name that is anything else than an string ...
-        if( /^[\[{].*[\]}]$/.test( stateName ) ){
-
-            throw RehooktException( REHOOKT_UNCONCISTENCY_EXP, 2, `Nothing than a string can be accepted as hook name given ${JSON.stringify( stateName )}` );
-        }
-
-        // A hook should not start by a numeric ...
-        if( /^[0-9].*$/.test( stateName ) ){
-            
-            throw RehooktException( REHOOKT_REFERER_EXP, 3, "A rehookt hook name should be valid." +
-            " You should avoid making your hooks start by a number" );
-        }
-
-        // A hook should not have a forbiden special char ...
-        if( /^.*[!@#%^&*()+\=\[\]{};':"\\|,.<>\/?~\]].*$/.test( stateName ) ){
-
-            throw RehooktException( REHOOKT_REFERER_EXP, 4, "A rehookt hook name should be valid." +
-            " You must avoid forbiden special chars in your hook name" );
-        }
-
-        // A hook should not have a space or linebreak in the name ...
-        if( /^.*[\r\n\s].*$/.test( stateName ) ){
-
-            throw RehooktException( REHOOKT_REFERER_EXP, 5, "A rehookt hook name should be valid." +
-            " You must avoid space chars or linebreak in your hook name" );
-        }
+  /**
+   * Parse the state name into json string object if it is not a string
+   * By this way you have the representation in the log.
+   *
+   * @param {string} stateName
+   * @return {string}
+   */
+  const specifiedStateName = function (stateName) {
+    //
+    if (typeof stateName !== 'string') {
+      // dot apply on null or undefined because these can be valid names
+      if (typeof stateName !== 'undefined' && stateName !== null) {
+        return JSON.stringify(stateName);
+      }
     }
 
-    const specifiedStateName = ( stateName ) => {
+    return stateName;
+  };
 
-        // Transform the state name into json string object to have the representation in the log.
-        if( typeof stateName !== "string" ){
-            
-            // dot apply on null or undefined because these can be valid names
-            if( stateName !== undefined && stateName !== null) {
-                return JSON.stringify( stateName );
-            }
-        }
+  const computeStatenameAndUse = function (item) {
+    let useValue, stateName;
 
-        return stateName;
+    const theTipe = typeof item;
+    const isntString = theTipe !== 'string';
+    const isObject = theTipe === 'object';
+
+    // dealing with objects or arrays.
+    if (isntString) {
+      // Checking if array first because it is also identified as object.
+      if (Array.isArray(item)) {
+        stateName = specifiedStateName(item[0]);
+        useValue = item[1];
+      } else if (isObject && item) {
+        stateName = specifiedStateName(item.name);
+        useValue = item.value;
+      }
+      /*else if (typeof item !== 'undefined' && item) {
+        stateName = item;
+      }*/
+
+      // dealing with only the name of the hook
+    } else {
+      stateName = item;
     }
 
-    const computeStatenameAndUse = ( item ) => {
+    return { stateName, use: useValue };
+  };
+  return { useStates, generate };
+};
 
-        let useValue, stateName;
-
-        const theTipe    = typeof item;
-        const isntString = theTipe !== "string";
-        const isObject   = theTipe === "object";
-
-        // dealing with objects or arrays.
-        if( isntString ){
-
-            // Checking if array first because it is also identified as object.
-            if( Array.isArray( item ) ){
-                stateName = specifiedStateName( item[ 0 ] );
-                useValue  = item[ 1 ];
-            }
-
-            else if( isObject ){
-                stateName = specifiedStateName( item.name );
-                useValue  = item.value;
-            }
-            
-        // dealing with only the name of the hook
-        }else{
-            stateName = item;
-        }
-        
-        return { stateName, use : useValue }
-    }
-    return { useStates, generate };
-} ).call( this );
+export default rehookt();
