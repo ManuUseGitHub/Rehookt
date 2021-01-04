@@ -21,13 +21,7 @@ describe('hooks', () => {
       const definitions = ["a", "b", "c"];
       const hooks = {};
   
-      shallow( < App hooks = {
-          hooks
-        }
-        definitions = {
-          definitions
-        }
-        />)
+      shallow( <App hooks = { hooks } definitions = { definitions } />)
   
         const keys = Object.keys(hooks.generated);
   
@@ -46,7 +40,7 @@ describe('hooks', () => {
       }
     ); 
 
-    it('creates a b c hook', () => {
+    it('creates hooks numberized from 10', () => {
       const definitions = [[ "rehookt_x",{x : 10, n : 10 , f: (x) =>{
         return x ;
       }}]];
@@ -88,6 +82,36 @@ describe('hooks', () => {
   
         expect(keys.length).toBe( 0 );
       }
+    ); 
+
+    it('special hook REHOOKT_NONE has to be the only one', () => {
+      const t = () => {
+        
+        const definitions = [ "REHOOKT_NONE", "hello"];
+
+        const hooks = {};
+
+        shallowAppWithHooks(hooks,definitions);
+        console.log(hooks);
+      };
+        expect(t).toThrow('Special definition REHOOKT_NONE cannot coexist with any other definition')
+      }
+    ); 
+
+    it('special definition for REHOOKT_X can coexist', () => {
+      const definitions = [ "Hello", [ "rehookt_x",{x : 10, n : 10 , f: (x) =>{
+        return x ;
+      }}] ];
+      
+      const hooks = {};
+  
+      shallowAppWithHooks(hooks,definitions);
+  
+      const keys = Object.keys(hooks.generated);
+  
+        expect(keys.length).toBe( 11 );
+      }
+      
     ); 
 
     it('creates no hook lowercase', () => {
@@ -142,15 +166,17 @@ describe('hooks', () => {
       expect(t).toThrow();
     }); 
 
-    it('undefined hook arg', () => {
+    it('hook with number is prefixed by rh_ and floating dot is change by comma', () => {
       const t = () => {
         
         const definitions = [ 1.2 ];
         const hooks = {};
 
         shallowAppWithHooks(hooks,definitions);
+
+        const keys = Object.keys(hooks.generated);
+        expect(keys.length).toBe( 1 );
       };
-      expect(t).toThrow("abcd");
     }); 
 
     it('null hook arg', () => {
@@ -161,10 +187,10 @@ describe('hooks', () => {
         
         shallowAppWithHooks(hooks,definitions);
       };
-      expect(t).toThrow("abcd");
+      expect(t).toThrow("Wrong hook referer exception");
     }); 
   
-    it('throws on unamed hook ', () => {
+    it('throws on unamed hook', () => {
       const t = () => {
         
         const definitions = [ { value : "John Doe" } ] 
@@ -175,7 +201,7 @@ describe('hooks', () => {
       expect(t).toThrow("Rehookts have to have a name defined");
     }); 
 
-    it('throws on starting by a special char named hook ', () => {
+    it('throws on starting by a special char named hook', () => {
       const t = () => {
         
         const definitions = [ "%False_name" ] 
@@ -186,7 +212,7 @@ describe('hooks', () => {
       expect(t).toThrow("A rehookt hook name should be valid");
     }); 
     
-    it('throws on having a space char named hook ', () => {
+    it('throws on having a space char named hook', () => {
       const t = () => {
         
         const definitions = [ " False_name" ] 
@@ -197,21 +223,10 @@ describe('hooks', () => {
       expect(t).toThrow("A rehookt hook name should be valid");
     });
 
-    it('throws on having a linebreak char named hook ', () => {
+    it('throws on having a linebreak char named hook', () => {
       const t = () => {
         
         const definitions = [ "False\nname" ] 
-        const hooks = {};
-    
-        shallowAppWithHooks(hooks,definitions);
-      };
-      expect(t).toThrow("A rehookt hook name should be valid");
-    });
-
-    it('throws on having a linebreak char named hook ', () => {
-      const t = () => {
-        
-        const definitions = [ "False\rname" ] 
         const hooks = {};
     
         shallowAppWithHooks(hooks,definitions);
@@ -241,7 +256,7 @@ describe('hooks', () => {
       expect(t).toThrow("A rehookt hook name should be valid");
   }); 
 
-    it('throws on hook name is an object ', () => {
+    it('throws on hook name is an object', () => {
       const t = () => {
         
         const definitions = [ { name : { name : "hook" }, value : "John Doe" } ] 
