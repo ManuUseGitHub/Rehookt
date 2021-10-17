@@ -1,19 +1,19 @@
-const gulp = require( 'gulp' );
-const del  = require( 'del' );
+const gulp = require( "gulp" );
+const del  = require( "del" );
 const fs   = require( "fs" );
 
 const { watch } = gulp;
 
 function copyFolder( cb ) {
     try{
-        if( fs.existsSync( 'rehookt' ) ){
+        if( fs.existsSync( "rehookt" ) ){
 
-            del( ['rehookt/**/*'], { force : false } );
+            del( [ "rehookt/**/*" ] , { force : false } );
         }
         
         gulp
-            .src( [ 'node_modules/rehookt/**/*' ] )
-            .pipe( gulp.dest( 'rehookt' ) );
+            .src( [ "node_modules/rehookt/**/*" ] )
+            .pipe( gulp.dest( "rehookt" ) );
             
     }
     catch( err ){ }
@@ -22,5 +22,5 @@ function copyFolder( cb ) {
 
 exports.default = () => {
 
-    watch( 'node_modules/rehookt/**/*', copyFolder );
-}
+    watch( "node_modules/rehookt/**/*" , copyFolder );
+};

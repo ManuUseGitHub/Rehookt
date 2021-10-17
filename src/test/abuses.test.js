@@ -1,40 +1,40 @@
-const React = require( 'react' );
-const App = require( '../App' );
-const Enzyme =require( 'enzyme' );
+const React = require( "react" );
+const App = require( "../App" );
+const Enzyme =require( "enzyme" );
 const { shallow } = Enzyme;
-const Adapter = require( 'enzyme-adapter-react-16' );
+const Adapter = require( "enzyme-adapter-react-16" );
 
-Enzyme.configure({
+Enzyme.configure( {
 
-    adapter: new Adapter()
-});
+    adapter : new Adapter()
+} );
 
 
-describe('abusive cases', () => {
+describe( "abusive cases" , () => {
 
-    it('throws on empty hook list', () => {
+    it( "throws on empty hook list" , () => {
 
-        const t = () => shallow( < App definitions = { [] } />);
+        const t = () => shallow( < App definitions = { [] } /> );
 
-        expect(t).toThrow("Rehookt need definitions to work on");
-    });
+        expect( t ).toThrow( "Rehookt need definitions to work on" );
+    } );
 
-    it('throws on too much hooks to create', () => {
+    it( "throws on too much hooks to create" , () => {
 
         const t = () => {
 
             const lotOfHooks = [];
             
-            const zeroPad = ( num, places ) => String( num ).padStart( places, '0' )
+            const zeroPad = ( num , places ) => String( num ).padStart( places , "0" );
     
-            for(let i = 1; i < 101; ++i){
+            for( let i = 1; i < 101; ++i ){
     
-                lotOfHooks.push( `hook${zeroPad(i, 2)}` );
+                lotOfHooks.push( `hook${zeroPad( i , 2 )}` );
             }
             
-            shallow( < App definitions = { lotOfHooks } />)
+            shallow( < App definitions = { lotOfHooks } /> );
         };
 
-        expect(t).toThrow("Rehookt prefers not to create an abusive number of rehookts");
-    });
-});
+        expect( t ).toThrow( "Rehookt prefers not to create an abusive number of rehookts" );
+    } );
+} );

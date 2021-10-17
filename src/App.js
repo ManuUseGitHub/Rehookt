@@ -1,14 +1,14 @@
 
-const React = require('react');
-const { useStates, generate } = require("../rehookt");
+const React = require( "react" );
+const { useStates , generate } = require( "../rehookt/index.js" );
 
-module.exports = function App(data) {
+module.exports = function App( data ) {
 
   
 
-  const {hooks = {generated : {}}, definitions = []} = data;
+  const { hooks = { generated : {} } , definitions = [] } = data;
 
-  hooks.generated = useStates(...definitions);
+  hooks.generated = useStates( ...definitions );
 
   return ( <div className="App" /> );
-}
+};
