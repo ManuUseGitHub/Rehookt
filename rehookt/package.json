@@ -27,7 +27,6 @@
     "name": "Jean Luc Emmanuel VERHANNEMAN"
   },
   "bundleDependencies": false,
-  "dependencies": {},
   "deprecated": false,
   "description": "Helps to create hooks (value+set)  in an object to pass through components nodes in one go.",
   "git repository": "https://github.com/ManuUseGitHub/Rehookt",
