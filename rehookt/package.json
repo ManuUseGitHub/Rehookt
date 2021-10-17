@@ -1,6 +1,5 @@
 {
   "_from": "rehookt",
-  "_id": "rehookt@1.4.0",
   "_inBundle": false,
   "_integrity": "sha512-4bsUDb5duoFv7g4/csE30XydlnfZt886LmTTmZQqceRKnilP8Q8mBV6zE4UXbApXof0PHqoiV2w254WTIB9jRA==",
   "_location": "/rehookt",
@@ -44,5 +43,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "1.4.0"
+  "version": "1.5.0"
 }
