@@ -120,4 +120,4 @@ You can associate a value to the hook by three ways.
 Visit the github test repository page [Here](https://github.com/ManuUseGitHub/Rehookt/blob/master/rehookt/index.js).
 
 1. **Demo**
-Here is an interactive [demo](https://github.com/ManuUseGitHub/Rehookt/tree/master/demo) to show you how Rehookt can be used to generate hooks **on the fly**.
+Here is a [demo](https://rehookt-demo.herokuapp.com/) project to see how you can use Rehookt how it can perform with **auto generated** hooks.
