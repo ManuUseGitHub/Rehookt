@@ -52,7 +52,7 @@
       "clover"
     ],
     "collectCoverageFrom": [
-      "rehookt/*.js" 
+      "rehookt/*.js"
     ]
   },
   "browserslist": {
