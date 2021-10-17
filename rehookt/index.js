@@ -9,7 +9,7 @@ var __spreadArray = (this && this.__spreadArray) || function (to, from, pack) {
     return to.concat(ar || Array.prototype.slice.call(from));
 };
 exports.__esModule = true;
-var react_1 = require("react");
+var react_1 = require("react"); 
 // Fonctions ------------------------------------------------------------------
 var analyse_1 = require("./analyse");
 var special_1 = require("./special");
